@@ -1,0 +1,5 @@
+ORG_ID            = ""
+PROJECT_ID        = ""
+PROJECT_NUMBER    = ""
+DEFAULT_REGION    = ""
+SUMMARY_RECIPIENT = ""
