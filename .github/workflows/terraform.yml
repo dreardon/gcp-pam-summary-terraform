@@ -33,6 +33,72 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@v5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+          tflint-checks:
+            name: 'tflint-checks'
+            runs-on: ubuntu-latest
+            environment: dev
+        
+            defaults:
+              run:
+                shell: bash
+        
+            steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+        
+            - uses: actions/cache@v3
+              name: Cache plugin dir
+              with:
+                path: ~/.tflint.d/plugins
+                key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
+        
+            - uses: terraform-linters/setup-tflint@v2
+              name: Setup TFLint
+              with:
+                tflint_version: v0.57.0
+              
+            - name: Show version
+              run: tflint --version
+        
+            - name: Init TFLint
+              run: tflint --init
+        
+            - name: Run TFLint
+              run: tflint -f compact --recursive 
+            
+            outputs:
+              tflint-passed: true   
+        
+        # checkov-checks:
+        #     name: 'checkov-checks'
+        #     runs-on: ubuntu-latest
+        #     needs: tflint-checks
+        #     if: ${{ needs.tflint-checks.outputs.tflint-passed == 'true' }}
+        
+        #     defaults:
+        #       run:
+        #         shell: bash
+        
+        #     steps:
+        #     - name: Checkout
+        #       uses: actions/checkout@v3
+        
+        #     - name: Checkov GitHub Action
+        #       uses: bridgecrewio/checkov-action@v12
+        #       with:
+        #         output_format: cli,sarif
+        #         output_file_path: console,results.sarif
+        #         quiet: false
+        #         soft_fail: false
+        #         log_level: ERROR
+        
+        #     # - name: Run Checkov
+        #     #   run: |
+        #     #         docker run --tty --rm -v ${{ github.workspace }}:/tf --workdir /tf bridgecrew/checkov --directory /tf --skip-check CKV_TF_1 --skip-check CKV_GCP_62 --skip-check CKV_GCP_114 --skip-check CKV_GCP_78
+        
+        #     outputs:
+        #       checkov-passed: true                  
   
   terraform:
     name: 'Terraform'
