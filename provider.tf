@@ -12,11 +12,11 @@ terraform {
       version = "~> 3.0"
     }
     google = {
-      source = "hashicorp/google"
+      source  = "hashicorp/google"
       version = "~> 6.34.0"
     }
     archive = {
-      source = "hashicorp/archive"
+      source  = "hashicorp/archive"
       version = "2.7.0"
     }
   }
