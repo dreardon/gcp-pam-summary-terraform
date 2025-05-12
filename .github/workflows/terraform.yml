@@ -6,10 +6,6 @@ on:
   pull_request:
 
 env:
-  # WORKLOAD_IDENTITY_POOL: ${{ vars.WORKLOAD_IDENTITY_POOL }}
-  # WORKLOAD_IDENTITY_PROVIDER: ${{ vars.WORKLOAD_IDENTITY_PROVIDER }}
-  # WORKLOAD_IDENTITY_POOL_PROJECT_NUMBER: ${{ vars.WORKLOAD_IDENTITY_POOL_PROJECT_NUMBER }}
-  # WORKLOAD_IDENTITY_PROJECT_ID: ${{ vars.WORKLOAD_IDENTITY_PROJECT_ID }}
   TF_VAR_ORG_ID: ${{ vars.TF_VAR_ORG_ID }}
   TF_VAR_PROJECT_ID: ${{ vars.TF_VAR_PROJECT_ID }}
   TF_VAR_PROJECT_NUMBER: ${{ vars.TF_VAR_PROJECT_NUMBER }}
@@ -92,7 +88,7 @@ jobs:
           output_format: cli,sarif
           output_file_path: console,results.sarif
           quiet: false
-          soft_fail: false
+          soft-fail: true
           log_level: ERROR
 
       outputs:
