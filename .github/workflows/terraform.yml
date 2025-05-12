@@ -88,7 +88,7 @@ jobs:
           output_format: cli,sarif
           output_file_path: console,results.sarif
           quiet: false
-          soft-fail: true
+          soft_fail: true
           log_level: ERROR
 
       outputs:
