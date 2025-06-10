@@ -1,6 +1,8 @@
+venvs/
 architecture.txt
 .terraform.lock.hcl
 .terraform/
 remote-state/terraform.tfstate
 remote-state/.terraform/
 terraform.tfvars
+backend.tf

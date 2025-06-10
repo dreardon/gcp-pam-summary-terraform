@@ -88,7 +88,6 @@ def delete_log_router(grant):
     
     #Delete Log Sink
     try:
-        destination = "bigquery.googleapis.com/projects/{0}/datasets/{1}".format(summary_project_id,dataset.dataset_id)
         sink_scope = grant['roles_scope'].replace('//cloudresourcemanager.googleapis.com/','')
 
         sink = logging.Sink(
@@ -192,7 +191,7 @@ def get_pam_grants(grant_message):
     grant['start_time'] = result.audit_trail.access_grant_time.isoformat() or ""
     try:
         grant['end_time'] = result.audit_trail.access_remove_time.isoformat()
-    except Exception as e:
+    except:
         grant['end_time'] = ""
     return grant
 
@@ -331,7 +330,7 @@ def send_notification(grantee, summary):
         }
     
     headers = {"Authorization": "Bearer " + access_token, "Content-Type": "application/json"} 
-    response = requests.post(app_int_endpoint, json=app_int_config, headers=headers)
+    requests.post(app_int_endpoint, json=app_int_config, headers=headers)
     print('Sent Notification')
 
 if __name__ == "__main__":
